@@ -1,0 +1,45 @@
+package com.thomas.airline.booking.controller;
+
+import com.thomas.airline.booking.dto.BookingRequestDto;
+import com.thomas.airline.booking.dto.BookingResponseDto;
+import com.thomas.airline.booking.service.BookingService;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/bookings")
+public class BookingController {
+    private final BookingService bookingService;
+
+    public BookingController(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
+    @PostMapping
+    public ResponseEntity<BookingResponseDto> createBooking( @Valid @RequestBody BookingRequestDto requestDto){
+        BookingResponseDto responseDto=bookingService.createBooking(requestDto);
+        return ResponseEntity.status(201).body(responseDto);
+    }
+    @GetMapping
+    public ResponseEntity<List<BookingResponseDto>> getAllBookings(){
+        List<BookingResponseDto> responseDtos=bookingService.getAllBookings();
+        return ResponseEntity.ok(responseDtos);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<BookingResponseDto> getBookingById(@PathVariable Long id){
+        BookingResponseDto responseDto=bookingService.getBookingById(id);
+        return ResponseEntity.ok(responseDto);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<BookingResponseDto> updateBooking(@PathVariable Long id, @Valid @RequestBody BookingRequestDto requestDto){
+        BookingResponseDto responseDto=bookingService.updateBooking(id, requestDto);
+        return ResponseEntity.ok(responseDto);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String > deleteBooking(@PathVariable Long id){
+        bookingService.deleteBooking(id);
+        return ResponseEntity.ok("Booking deleted successfully.");
+    }
+}

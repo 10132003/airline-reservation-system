@@ -65,4 +65,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleFlightSeatNotFound(FlightSeatNotFoundException ex){
         return ResponseEntity.status(404).body(ex.getMessage());
     }
+    @ExceptionHandler(BookingNotFoundException.class)
+    public ResponseEntity<String> handleBookingNotFound(BookingNotFoundException ex){
+        return ResponseEntity.status(404).body(ex.getMessage());
+    }
 }
