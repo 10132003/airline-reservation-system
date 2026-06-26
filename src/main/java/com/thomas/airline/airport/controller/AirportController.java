@@ -40,6 +40,6 @@ public class AirportController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAirport(@PathVariable Long id){
         airportService.deleteAirport(id);
-        return ResponseEntity.ok("Deleted Successfully.");
+        return ResponseEntity.ok("Airport Deleted Successfully.");
     }
 }

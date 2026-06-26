@@ -21,4 +21,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String > handleAirportNotFound(AirportNotFoundException ex){
         return ResponseEntity.status(404).body(ex.getMessage());
     }
+    @ExceptionHandler(AircraftAlreadyExistException.class)
+    public ResponseEntity<String> handleAircraftAlreadyExist(AircraftAlreadyExistException ex){
+        return ResponseEntity.status(409).body(ex.getMessage());
+    }
+    @ExceptionHandler(AircraftNotFoundException.class)
+    public ResponseEntity<String > handleAircraftNotFound(AircraftNotFoundException ex){
+        return ResponseEntity.status(404).body(ex.getMessage());
+    }
 }
