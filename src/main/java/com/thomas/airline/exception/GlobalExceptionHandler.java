@@ -37,4 +37,20 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String>handleSeatNotFound(SeatNotFoundException ex){
         return ResponseEntity.status(404).body(ex.getMessage());
     }
+    @ExceptionHandler(FlightAlreadyExistException.class)
+    public ResponseEntity<String > handleFlightAlreadyExist(FlightAlreadyExistException ex){
+        return ResponseEntity.status(409).body(ex.getMessage());
+    }
+    @ExceptionHandler(InvalidFlightRouteException.class)
+    public ResponseEntity<String> handleInvalidFlightRoute(InvalidFlightRouteException ex){
+        return ResponseEntity.status(404).body(ex.getMessage());
+    }
+    @ExceptionHandler(InvalidFlightTimeException.class)
+    public ResponseEntity<String >handleInvalidFlightTime(InvalidFlightTimeException ex){
+        return ResponseEntity.status(404).body(ex.getMessage());
+    }
+    @ExceptionHandler(FlightNotFoundException.class)
+    public ResponseEntity<String> handleFlightNotFound(FlightNotFoundException ex){
+        return ResponseEntity.status(404).body(ex.getMessage());
+    }
 }
