@@ -29,4 +29,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String > handleAircraftNotFound(AircraftNotFoundException ex){
         return ResponseEntity.status(404).body(ex.getMessage());
     }
+    @ExceptionHandler(SeatAlreadyExistException.class)
+    public ResponseEntity<String > handleSeatAlreadyExist(SeatAlreadyExistException ex){
+        return ResponseEntity.status(409).body(ex.getMessage());
+    }
+    @ExceptionHandler(SeatNotFoundException.class)
+    public ResponseEntity<String>handleSeatNotFound(SeatNotFoundException ex){
+        return ResponseEntity.status(404).body(ex.getMessage());
+    }
 }
