@@ -1,5 +1,6 @@
 package com.thomas.airline.exception;
 
+import com.thomas.airline.payment.repository.PaymentRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -75,6 +76,14 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(PassengerNotFoundException.class)
     public ResponseEntity<String > handlePassengerNotFound(PassengerNotFoundException ex){
+        return ResponseEntity.status(404).body(ex.getMessage());
+    }
+    @ExceptionHandler(PaymentAlreadyExistsException.class)
+    public ResponseEntity<String > handlePaymentAlreadyExist(PaymentAlreadyExistsException ex){
+        return ResponseEntity.status(409).body(ex.getMessage());
+    }
+    @ExceptionHandler(PaymentNotFoundException.class)
+    public ResponseEntity<String> handlePaymentNotFound(PaymentNotFoundException ex){
         return ResponseEntity.status(404).body(ex.getMessage());
     }
 }
