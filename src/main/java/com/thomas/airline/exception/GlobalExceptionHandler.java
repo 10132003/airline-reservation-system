@@ -69,4 +69,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleBookingNotFound(BookingNotFoundException ex){
         return ResponseEntity.status(404).body(ex.getMessage());
     }
+    @ExceptionHandler(PassengerAlreadyExistsException.class)
+    public ResponseEntity<String> handlePassengerAlreadyExist(PassengerAlreadyExistsException ex){
+        return ResponseEntity.status(409).body(ex.getMessage());
+    }
+    @ExceptionHandler(PassengerNotFoundException.class)
+    public ResponseEntity<String > handlePassengerNotFound(PassengerNotFoundException ex){
+        return ResponseEntity.status(404).body(ex.getMessage());
+    }
 }
