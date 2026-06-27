@@ -29,4 +29,5 @@ public class UserMapper {
         responseDto.setUpdatedAt(user.getUpdatedAt());
         return responseDto;
     }
+
 }

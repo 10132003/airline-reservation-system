@@ -13,6 +13,9 @@ import com.thomas.airline.flight.mapper.FlightMapper;
 import com.thomas.airline.flight.repository.FlightRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -96,5 +99,18 @@ public class FlightService {
     public void deleteFlight(Long id){
         Flight flight=flightRepository.findById(id).orElseThrow(()-> new FlightNotFoundException("Flight is not available."));
         flightRepository.delete(flight);
+    }
+    public List<FlightResponseDto> searchFlights(String sourcecity, String destinationcity, LocalDate travelDate){
+         Airport sourceAirport=airportRepository.findByCityIgnoreCase(sourcecity).orElseThrow(()-> new CityNotFoundException("City is not available."));
+         Airport destinationAirport=airportRepository.findByCityIgnoreCase(destinationcity).orElseThrow(()-> new CityNotFoundException("City is not available."));
+         LocalDateTime startOfDay=travelDate.atStartOfDay();
+         LocalDateTime endOfDay=travelDate.atTime(LocalTime.MAX);
+         List<Flight> flights=flightRepository.findBySourceAirportAndDestinationAirportAndDepartureTimeBetween(sourceAirport,destinationAirport,startOfDay,endOfDay);
+         List<FlightResponseDto> responseDtos=new ArrayList<>();
+        for(Flight flight:flights){
+            FlightResponseDto responseDto=flightMapper.flightToResponseDto(flight);
+            responseDtos.add(responseDto);
+        }
+        return responseDtos;
     }
 }

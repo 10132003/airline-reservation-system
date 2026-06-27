@@ -97,4 +97,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String > handleNotificationNotFound(NotificationNotFoundException ex){
         return ResponseEntity.status(404).body(ex.getMessage());
     }
+    @ExceptionHandler(CityNotFoundException.class)
+    public ResponseEntity<String> handleCityNotFound(CityNotFoundException ex){
+        return ResponseEntity.status(404).body(ex.getMessage());
+    }
 }

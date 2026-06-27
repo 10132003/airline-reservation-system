@@ -2,11 +2,13 @@ package com.thomas.airline.flight.controller;
 
 import com.thomas.airline.flight.dto.FlightRequestDto;
 import com.thomas.airline.flight.dto.FlightResponseDto;
+import com.thomas.airline.flight.entity.Flight;
 import com.thomas.airline.flight.service.FlightService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -41,5 +43,10 @@ public class FlightController {
     public ResponseEntity<String> deleteFlight(@PathVariable Long id){
         flightService.deleteFlight(id);
         return ResponseEntity.ok("Flight deleted successfully.");
+    }
+    @GetMapping("/search")
+    public ResponseEntity<List<FlightResponseDto>> searchFlights(@RequestParam String sourcecity, @RequestParam String destinationcity, @RequestParam LocalDate travelDate){
+        List<FlightResponseDto> flights=flightService.searchFlights(sourcecity,destinationcity,travelDate);
+        return ResponseEntity.ok(flights);
     }
 }
