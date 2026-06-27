@@ -1,6 +1,6 @@
 package com.thomas.airline.common.enums;
 
 public enum TicketStatus {
-    ACTIVE,
+    BOOKED,
     CANCELLED
 }
