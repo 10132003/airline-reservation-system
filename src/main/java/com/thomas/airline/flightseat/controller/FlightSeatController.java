@@ -1,6 +1,7 @@
 package com.thomas.airline.flightseat.controller;
 
 
+import com.thomas.airline.flightseat.dto.AvailableSeatResponseDto;
 import com.thomas.airline.flightseat.dto.FlightSeatRequestDto;
 import com.thomas.airline.flightseat.dto.FlightSeatResponseDto;
 import com.thomas.airline.flightseat.service.FlightSeatService;
@@ -42,5 +43,10 @@ public class FlightSeatController {
     public ResponseEntity<String > deleteFlightSeat(@PathVariable Long id){
         flightSeatService.deleteFlightSeat(id);
         return ResponseEntity.ok("Flight seat deleted successfully.");
+    }
+    @GetMapping("/available/{flightId}")
+    public ResponseEntity<List<AvailableSeatResponseDto>> getAvailableSeats(@PathVariable Long flightId){
+        List<AvailableSeatResponseDto> availableSeatResponseDtos=flightSeatService.getAvailableSeats(flightId);
+        return ResponseEntity.ok(availableSeatResponseDtos);
     }
 }

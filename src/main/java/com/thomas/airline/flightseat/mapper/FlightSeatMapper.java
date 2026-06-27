@@ -1,5 +1,6 @@
 package com.thomas.airline.flightseat.mapper;
 
+import com.thomas.airline.flightseat.dto.AvailableSeatResponseDto;
 import com.thomas.airline.flightseat.dto.FlightSeatRequestDto;
 import com.thomas.airline.flightseat.dto.FlightSeatResponseDto;
 import com.thomas.airline.flightseat.entity.FlightSeat;
@@ -19,5 +20,13 @@ public class FlightSeatMapper {
         responseDto.setSeatId(flightSeat.getSeat().getId());
         responseDto.setStatus(flightSeat.getStatus());
         return  responseDto;
+    }
+    public AvailableSeatResponseDto flightSeatToAvailableSeatResponseDto(FlightSeat flightSeat){
+        AvailableSeatResponseDto availableSeatResponseDto=new AvailableSeatResponseDto();
+        availableSeatResponseDto.setFlightSeatId(flightSeat.getId());
+        availableSeatResponseDto.setSeatNumber(flightSeat.getSeat().getSeatNumber());
+        availableSeatResponseDto.setSeatClass(flightSeat.getSeat().getSeatClass());
+        availableSeatResponseDto.setSeatType(flightSeat.getSeat().getSeatType());
+        return availableSeatResponseDto;
     }
 }

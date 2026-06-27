@@ -5,6 +5,7 @@ import com.thomas.airline.exception.*;
 import com.thomas.airline.flight.entity.Flight;
 import com.thomas.airline.flight.mapper.FlightMapper;
 import com.thomas.airline.flight.repository.FlightRepository;
+import com.thomas.airline.flightseat.dto.AvailableSeatResponseDto;
 import com.thomas.airline.flightseat.dto.FlightSeatRequestDto;
 import com.thomas.airline.flightseat.dto.FlightSeatResponseDto;
 import com.thomas.airline.flightseat.entity.FlightSeat;
@@ -84,5 +85,15 @@ public class FlightSeatService {
     public void deleteFlightSeat(Long id){
         FlightSeat flightSeat=flightSeatRepository.findById(id).orElseThrow(()-> new FlightSeatNotFoundException("Flight seat is not available."));
         flightSeatRepository.delete(flightSeat);
+    }
+    public List<AvailableSeatResponseDto> getAvailableSeats(Long flightId){
+        Flight flight=flightRepository.findById(flightId).orElseThrow(()->new FlightNotFoundException("Flight is not available."));
+        List<FlightSeat> flightSeats=flightSeatRepository.findByFlightAndStatus(flight,FlightSeatStatus.AVAILABLE);
+        List<AvailableSeatResponseDto> responseDtos=new ArrayList<>();
+        for (FlightSeat flightSeat:flightSeats){
+            AvailableSeatResponseDto availableSeatResponseDto=flightSeatMapper.flightSeatToAvailableSeatResponseDto(flightSeat);
+            responseDtos.add(availableSeatResponseDto);
+        }
+        return responseDtos;
     }
 }
