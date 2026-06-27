@@ -101,4 +101,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleCityNotFound(CityNotFoundException ex){
         return ResponseEntity.status(404).body(ex.getMessage());
     }
+    @ExceptionHandler(FlightSeatNotAvailableException.class)
+    public ResponseEntity<String> handleFlightSeatNotavailable(FlightSeatNotAvailableException ex){
+        return ResponseEntity.status(404).body(ex.getMessage());
+    }
 }

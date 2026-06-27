@@ -6,5 +6,6 @@ public enum NotificationType {
     TICKET,
     FLIGHT,
     REFUND,
-    SYSTEM
+    SYSTEM,
+    BOOKING_CONFIRMATION
 }

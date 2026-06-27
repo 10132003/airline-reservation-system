@@ -96,4 +96,14 @@ public class FlightSeatService {
         }
         return responseDtos;
     }
+    public FlightSeatResponseDto reserveFlightSeat(Long flightSeatId){
+        FlightSeat flightSeat=flightSeatRepository.findById(flightSeatId).orElseThrow(()-> new FlightSeatNotFoundException("Flight seat is not available."));
+        if(flightSeat.getStatus()!=FlightSeatStatus.AVAILABLE){
+            throw new FlightSeatNotAvailableException("Flight seat is not available");
+        }
+        flightSeat.setStatus(FlightSeatStatus.BOOKED);
+        FlightSeat savedFlightSeat=flightSeatRepository.save(flightSeat);
+        FlightSeatResponseDto responseDto=flightSeatMapper.flightSeatToResponseDto(savedFlightSeat);
+        return responseDto;
+    }
 }
