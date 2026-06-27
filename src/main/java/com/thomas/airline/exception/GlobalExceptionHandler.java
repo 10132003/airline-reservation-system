@@ -93,4 +93,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String > handleTicketNotFound(TicketNotFoundException ex){
         return ResponseEntity.status(404).body(ex.getMessage());
     }
+    @ExceptionHandler(NotificationNotFoundException.class)
+    public ResponseEntity<String > handleNotificationNotFound(NotificationNotFoundException ex){
+        return ResponseEntity.status(404).body(ex.getMessage());
+    }
 }
