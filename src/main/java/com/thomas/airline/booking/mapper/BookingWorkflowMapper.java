@@ -63,4 +63,12 @@ public class BookingWorkflowMapper {
         notificationRequestDto.setMessage("Your booking with PNR " + pnr + " has been confirmed.");
         return notificationRequestDto;
     }
+    public NotificationRequestDto createBookingCancellationNotificationRequestDto(Long userId, String pnr){
+        NotificationRequestDto notificationRequestDto=new NotificationRequestDto();
+        notificationRequestDto.setUserId(userId);
+        notificationRequestDto.setTitle("Booking cancelled");
+        notificationRequestDto.setMessage("Your booking with PNR"+ pnr +" has been cancelled successfully.");
+        notificationRequestDto.setNotificationType(NotificationType.BOOKING_CANCELLATION);
+        return notificationRequestDto;
+    }
 }

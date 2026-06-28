@@ -1,9 +1,6 @@
 package com.thomas.airline.booking.controller;
 
-import com.thomas.airline.booking.dto.BookingRequestDto;
-import com.thomas.airline.booking.dto.BookingResponseDto;
-import com.thomas.airline.booking.dto.CompleteBookingRequestDto;
-import com.thomas.airline.booking.dto.CompleteBookingResponseDto;
+import com.thomas.airline.booking.dto.*;
 import com.thomas.airline.booking.service.BookingService;
 import com.thomas.airline.booking.service.BookingWorkflowService;
 import jakarta.validation.Valid;
@@ -52,5 +49,10 @@ public class BookingController {
     public ResponseEntity<CompleteBookingResponseDto> completeBooking(@RequestBody CompleteBookingRequestDto requestDto){
         CompleteBookingResponseDto completeBookingResponseDto=bookingWorkflowService.completeBooking(requestDto);
         return ResponseEntity.ok(completeBookingResponseDto);
+    }
+    @PostMapping("/cancel")
+    public ResponseEntity<BookingCancellationResponseDto> cancelBooking(@RequestBody BookingCancellationRequestDto requestDto){
+        BookingCancellationResponseDto bookingCancellationResponseDto=bookingWorkflowService.cancelBooking(requestDto);
+        return ResponseEntity.ok(bookingCancellationResponseDto);
     }
 }

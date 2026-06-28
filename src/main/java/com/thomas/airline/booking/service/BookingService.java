@@ -8,9 +8,12 @@ import com.thomas.airline.booking.repository.BookingRepository;
 import com.thomas.airline.common.enums.BookingStatus;
 import com.thomas.airline.exception.BookingNotFoundException;
 import com.thomas.airline.exception.FlightNotFoundException;
+import com.thomas.airline.exception.TicketNotFoundException;
 import com.thomas.airline.exception.UserNotFoundException;
 import com.thomas.airline.flight.entity.Flight;
 import com.thomas.airline.flight.repository.FlightRepository;
+import com.thomas.airline.ticket.dto.TicketResponseDto;
+import com.thomas.airline.ticket.entity.Ticket;
 import com.thomas.airline.user.entity.User;
 import com.thomas.airline.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -92,4 +95,5 @@ public class BookingService {
         BookingResponseDto responseDto=bookingMapper.bookingToResponseDto(savedBooking);
         return responseDto;
     }
+
 }

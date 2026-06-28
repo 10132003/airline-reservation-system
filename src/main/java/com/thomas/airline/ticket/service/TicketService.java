@@ -100,4 +100,16 @@ public class TicketService {
         Ticket ticket=ticketRepository.findById(id).orElseThrow(()->  new TicketNotFoundException("Ticket is not available."));
         ticketRepository.delete(ticket);
     }
+    public TicketResponseDto updateTicketStatus(Long ticketId,TicketStatus ticketStatus){
+        Ticket ticket=ticketRepository.findById(ticketId).orElseThrow(()-> new TicketNotFoundException("Ticket is not available."));
+        ticket.setStatus(ticketStatus);
+        Ticket savedTicket=ticketRepository.save(ticket);
+        TicketResponseDto ticketResponseDto=ticketMapper.ticketToResponseDto(savedTicket);
+        return ticketResponseDto;
+    }
+    public TicketResponseDto getTicketByBookingId(Long bookingId) {
+        Ticket ticket = ticketRepository.findByBookingId(bookingId).orElseThrow(() -> new TicketNotFoundException("Ticket not found."));
+        return ticketMapper.ticketToResponseDto(ticket);
+    }
 }
+

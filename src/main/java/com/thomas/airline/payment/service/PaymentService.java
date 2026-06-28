@@ -89,9 +89,14 @@
         }
         public PaymentResponseDto updatePaymentStatus(Long paymentId, PaymentStatus paymentStatus){
             Payment payment=paymentRepository.findById(paymentId).orElseThrow(()-> new PaymentNotFoundException("Payment is not avilable."));
-            payment.setPaymentStatus(PaymentStatus.SUCCESS);
+            payment.setPaymentStatus(paymentStatus);
             Payment savedPayment= paymentRepository.save(payment);
             PaymentResponseDto paymentResponseDto=paymentMapper.paymentToResponseDto(savedPayment);
             return paymentResponseDto;
+        }
+        public PaymentResponseDto getPaymentByBookingId(Long bookingId) {
+            Payment payment = paymentRepository.findByBookingId(bookingId)
+                    .orElseThrow(() -> new PaymentNotFoundException("Payment not found."));
+            return paymentMapper.paymentToResponseDto(payment);
         }
     }

@@ -106,4 +106,11 @@ public class FlightSeatService {
         FlightSeatResponseDto responseDto=flightSeatMapper.flightSeatToResponseDto(savedFlightSeat);
         return responseDto;
     }
+    public FlightSeatResponseDto releaseFlightSeat(Long flightSeatId){
+        FlightSeat flightSeatId1=flightSeatRepository.findById(flightSeatId).orElseThrow(()-> new FlightSeatNotFoundException("Flight seat is not available."));
+        flightSeatId1.setStatus(FlightSeatStatus.AVAILABLE);
+        FlightSeat savedFlightSeat=flightSeatRepository.save(flightSeatId1);
+        FlightSeatResponseDto responseDto=flightSeatMapper.flightSeatToResponseDto(savedFlightSeat);
+        return responseDto;
+    }
 }

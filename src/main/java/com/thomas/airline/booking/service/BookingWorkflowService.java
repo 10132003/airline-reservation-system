@@ -1,12 +1,10 @@
 package com.thomas.airline.booking.service;
 
-import com.thomas.airline.booking.dto.BookingRequestDto;
-import com.thomas.airline.booking.dto.BookingResponseDto;
-import com.thomas.airline.booking.dto.CompleteBookingRequestDto;
-import com.thomas.airline.booking.dto.CompleteBookingResponseDto;
-import com.thomas.airline.booking.entity.Booking;
+import com.thomas.airline.booking.dto.*;
 import com.thomas.airline.booking.mapper.BookingWorkflowMapper;
+import com.thomas.airline.common.enums.BookingStatus;
 import com.thomas.airline.common.enums.PaymentStatus;
+import com.thomas.airline.common.enums.TicketStatus;
 import com.thomas.airline.flightseat.dto.FlightSeatResponseDto;
 import com.thomas.airline.flightseat.service.FlightSeatService;
 import com.thomas.airline.notification.dto.NotificationRequestDto;
@@ -16,7 +14,6 @@ import com.thomas.airline.passenger.dto.PassengerResponseDto;
 import com.thomas.airline.passenger.service.PassengerService;
 import com.thomas.airline.payment.dto.PaymentRequestDto;
 import com.thomas.airline.payment.dto.PaymentResponseDto;
-import com.thomas.airline.payment.entity.Payment;
 import com.thomas.airline.payment.service.PaymentService;
 import com.thomas.airline.ticket.dto.TicketRequestDto;
 import com.thomas.airline.ticket.dto.TicketResponseDto;
@@ -34,6 +31,8 @@ public class BookingWorkflowService {
     private final TicketService ticketService;
     private final NotificationService notificationService;
     private final BookingWorkflowMapper bookingWorkflowMapper;
+
+
     public BookingWorkflowService(BookingService bookingService, PassengerService passengerService, FlightSeatService flightSeatService, PaymentService paymentService, TicketService ticketService, NotificationService notificationService, BookingWorkflowMapper bookingWorkflowMapper) {
         this.bookingService = bookingService;
         this.passengerService = passengerService;
@@ -42,6 +41,7 @@ public class BookingWorkflowService {
         this.ticketService = ticketService;
         this.notificationService = notificationService;
         this.bookingWorkflowMapper=bookingWorkflowMapper;
+
     }
     public CompleteBookingResponseDto completeBooking(CompleteBookingRequestDto requestDto) {
 
@@ -105,5 +105,62 @@ public class BookingWorkflowService {
         completeBookingResponseDto.setTicketNumber(ticketResponseDto.getTicketNumber());
 
         return completeBookingResponseDto;
+    }
+    public BookingCancellationResponseDto cancelBooking(BookingCancellationRequestDto requestDto) {
+
+        Long bookingId = requestDto.getBookingId();
+
+        BookingResponseDto bookingResponseDto =
+                bookingService.getBookingById(bookingId);
+
+        if (!bookingResponseDto.getStatus().equals(BookingStatus.CONFIRMED)) {
+            throw new RuntimeException("Only confirmed bookings can be cancelled.");
+        }
+
+        TicketResponseDto ticketResponseDto =
+                ticketService.getTicketByBookingId(bookingId);
+
+        Long ticketId = ticketResponseDto.getId();
+
+        Long flightSeatId = ticketResponseDto.getFlightSeatId();
+
+        flightSeatService.releaseFlightSeat(flightSeatId);
+
+        ticketService.updateTicketStatus(ticketId, TicketStatus.CANCELLED);
+
+        BookingResponseDto updatedBooking =
+                bookingService.updateBookingStatus(
+                        bookingId,
+                        BookingStatus.CANCELLED
+                );
+
+        PaymentResponseDto paymentResponseDto =
+                paymentService.getPaymentByBookingId(bookingId);
+
+        Long paymentId = paymentResponseDto.getId();
+
+        PaymentResponseDto updatedPayment =
+                paymentService.updatePaymentStatus(
+                        paymentId,
+                        PaymentStatus.REFUNDED
+                );
+        NotificationRequestDto notificationRequestDto =
+                bookingWorkflowMapper.createBookingCancellationNotificationRequestDto(
+                        updatedBooking.getUserId(),
+                        updatedBooking.getPnr()
+                );
+
+        notificationService.createNotification(notificationRequestDto);
+
+        BookingCancellationResponseDto responseDto =
+                new BookingCancellationResponseDto();
+
+        responseDto.setBookingId(updatedBooking.getId());
+        responseDto.setPnr(updatedBooking.getPnr());
+        responseDto.setBookingStatus(updatedBooking.getStatus());
+        responseDto.setPaymentStatus(updatedPayment.getPaymentStatus());
+        responseDto.setMessage("Booking cancelled successfully.");
+
+        return responseDto;
     }
 }
