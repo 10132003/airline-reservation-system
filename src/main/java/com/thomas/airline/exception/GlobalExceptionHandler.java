@@ -105,4 +105,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleFlightSeatNotavailable(FlightSeatNotAvailableException ex){
         return ResponseEntity.status(404).body(ex.getMessage());
     }
+    @ExceptionHandler(PaymentAlreadyCompletedException.class)
+    public ResponseEntity<String> handlePaymentAlreadyCompleted(PaymentAlreadyCompletedException ex){
+        return ResponseEntity.status(409).body(ex.getMessage());
+    }
+    @ExceptionHandler(BookingAlreadyCompletedException.class)
+    public ResponseEntity<String> handleBookingAlreadyCompleted(BookingAlreadyCompletedException ex){
+        return ResponseEntity.status(409).body(ex.getMessage());
+    }
 }

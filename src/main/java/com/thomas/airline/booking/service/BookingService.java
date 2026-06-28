@@ -85,4 +85,11 @@ public class BookingService {
         Booking booking=bookingRepository.findById(id).orElseThrow(()-> new BookingNotFoundException("Booking is not available."));
         bookingRepository.delete(booking);
     }
+    public BookingResponseDto updateBookingStatus(Long id,BookingStatus bookingStatus){
+        Booking booking=bookingRepository.findById(id).orElseThrow(()-> new BookingNotFoundException("Booking is not available."));
+        booking.setStatus(bookingStatus);
+        Booking savedBooking=bookingRepository.save(booking);
+        BookingResponseDto responseDto=bookingMapper.bookingToResponseDto(savedBooking);
+        return responseDto;
+    }
 }

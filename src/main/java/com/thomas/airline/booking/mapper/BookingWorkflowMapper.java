@@ -4,9 +4,11 @@ import com.thomas.airline.booking.dto.BookingRequestDto;
 import com.thomas.airline.booking.dto.CompleteBookingRequestDto;
 import com.thomas.airline.common.enums.NotificationType;
 import com.thomas.airline.notification.dto.NotificationRequestDto;
+import com.thomas.airline.notification.dto.NotificationResponseDto;
 import com.thomas.airline.passenger.dto.PassengerRequestDto;
 import com.thomas.airline.payment.dto.PaymentRequestDto;
 import com.thomas.airline.ticket.dto.TicketRequestDto;
+import com.thomas.airline.user.entity.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -51,6 +53,14 @@ public class BookingWorkflowMapper {
         notificationRequestDto.setMessage("Your booking has been confirmed. PNR: " + pnr + ", Ticket Number: " + ticketNumber);
         notificationRequestDto.setNotificationType(NotificationType.BOOKING_CONFIRMATION);
 
+        return notificationRequestDto;
+    }
+    public NotificationRequestDto NotificationRequestDto(Long id,String pnr){
+        NotificationRequestDto notificationRequestDto=new NotificationRequestDto();
+        notificationRequestDto.setUserId(id);
+        notificationRequestDto.setNotificationType(NotificationType.BOOKING_CONFIRMATION);
+        notificationRequestDto.setTitle("Booking Confirmed");
+        notificationRequestDto.setMessage("Your booking with PNR " + pnr + " has been confirmed.");
         return notificationRequestDto;
     }
 }

@@ -87,4 +87,11 @@
             Payment payment=paymentRepository.findById(id).orElseThrow(()-> new  PaymentNotFoundException("Payment is not available."));
             paymentRepository.delete(payment);
         }
+        public PaymentResponseDto updatePaymentStatus(Long paymentId, PaymentStatus paymentStatus){
+            Payment payment=paymentRepository.findById(paymentId).orElseThrow(()-> new PaymentNotFoundException("Payment is not avilable."));
+            payment.setPaymentStatus(PaymentStatus.SUCCESS);
+            Payment savedPayment= paymentRepository.save(payment);
+            PaymentResponseDto paymentResponseDto=paymentMapper.paymentToResponseDto(savedPayment);
+            return paymentResponseDto;
+        }
     }
