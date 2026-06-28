@@ -2,19 +2,56 @@ package com.thomas.airline.user.dto;
 
 import com.thomas.airline.common.enums.RoleName;
 import com.thomas.airline.common.enums.UserStatus;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.time.LocalDateTime;
 
 public class UserResponseDto {
+    @Schema(
+            description = "Unique ID of the user",
+            example = "1"
+    )
     private Long id;
+    @Schema(
+            description = "First name of the user",
+            example = "John"
+    )
     private String firstName;
+    @Schema(
+            description = "Last name of the user",
+            example = "Doe"
+    )
     private String lastName;
+    @Schema(
+            description = "Email address of the user",
+            example = "JohnDoe@gmail.com"
+    )
     private String email;
+    @Schema(
+            description = "Phone number of the user",
+            example = "1234567890"
+    )
     private String phoneNumber;
+    @Schema(
+            description = "Status of the user",
+            example = "ACTIVE"
+    )
     private UserStatus status;
+    @Schema(
+            description = "Role of the user",
+            example = "ADMIN"
+    )
     private RoleName role;
+    @Schema(
+            description = "Date and time when the user was created",
+            example = "2026-06-28T07:56:53.386Z"
+    )
     private LocalDateTime createdAt;
+    @Schema(
+            description = "Date and time when the user was updated",
+            example = "2026-06-29T07:56:53.386Z"
+    )
     private LocalDateTime updatedAt;
 
     public UserResponseDto() {

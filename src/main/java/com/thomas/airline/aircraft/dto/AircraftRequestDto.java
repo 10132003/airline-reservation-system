@@ -1,13 +1,26 @@
 package com.thomas.airline.aircraft.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
 public class AircraftRequestDto {
+    @Schema(
+            description = "Aircraft registration number",
+            example = "VT-ANB"
+    )
     @NotBlank
     private String registrationNumber;
     @NotBlank
+    @Schema(
+            description = "Aircraft's manufacturer",
+            example = "Airbus"
+    )
     private String manufacturer;
     @NotBlank
+    @Schema(
+            description = "Aircraft's model number",
+            example = "A380-800"
+    )
     private String model;
 
     public AircraftRequestDto() {
