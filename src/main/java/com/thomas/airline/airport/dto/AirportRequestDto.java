@@ -1,18 +1,43 @@
 package com.thomas.airline.airport.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
 public class AirportRequestDto {
+    @Schema(
+            description = "Unique airport code",
+            example="MAA"
+    )
     @NotBlank
     private String airportCode;
+    @Schema(
+            description = "Name of the airport",
+            example = "Dubai International Airport"
+    )
     @NotBlank
     private  String airportName;
+    @Schema(
+            description = "City of the airport",
+            example = "Dubai"
+    )
     @NotBlank
     private String city;
+    @Schema(
+            description = "State of the airport",
+            example = "Dubai"
+    )
     @NotBlank
     private String state;
+    @Schema(
+            description = "Country of the airport",
+            example = "United Arab Emirates"
+    )
     @NotBlank
     private String country;
+    @Schema(
+            description = "Timezone of the airport",
+            example = "Asia/Dubai"
+    )
     @NotBlank
     private String timezone;
 

@@ -1,19 +1,60 @@
 package com.thomas.airline.airport.dto;
 
 import com.thomas.airline.common.enums.AirportStatus;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 
 public class AirportResponseDto {
+    @Schema(
+            description = "Unique ID of the airport",
+            example = "1"
+    )
     private Long id;
+    @Schema(
+            description = "Code of the airport",
+            example = "MAA"
+    )
     private String airportCode;
+    @Schema(
+            description = "Name of the airport",
+            example = "Chennai International Airport "
+    )
     private String airportName;
+    @Schema(
+            description = "City of the airport",
+            example = "Chennai"
+    )
     private String city;
+    @Schema(
+            description = "State of the airport",
+            example = "TamilNadu"
+    )
     private String state;
+    @Schema(
+            description = "Country of the airport",
+            example = "India"
+    )
     private String country;
+    @Schema(
+            description = "Timezone of the airport",
+            example = "Asia/Kolkata"
+    )
     private String timezone;
+    @Schema(
+            description = "Status of the airport",
+            example = "ACTIVE"
+    )
     private AirportStatus status;
+    @Schema(
+            description = "Date and Time the airport was created at",
+            example = "2026-06-25 23:20:01.996767"
+    )
     private LocalDateTime createdAt;
+    @Schema(
+            description = "Date and Time the airport was updated at",
+            example = "2026-06-27 23:20:01.996767"
+    )
     private LocalDateTime updatedAt;
 
     public AirportResponseDto() {

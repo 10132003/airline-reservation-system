@@ -29,7 +29,7 @@ public class AircraftController {
     @PostMapping
     @Operation(
             summary = "Creates new aircraft",
-            description = "Creates new aircraft and store in the aircrafts table"
+            description = "Creates new aircraft and store in the aircraft's table"
     )
     @ApiResponses({
             @ApiResponse(
@@ -49,12 +49,12 @@ public class AircraftController {
     @GetMapping
     @Operation(
             summary = "Get all aircrafts",
-            description = "Get all aircrafts from the aircrafts table"
+            description = "Get all aircraft's from the aircraft's table"
     )
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
-                    description = "Aircrafts retrieved successfully"
+                    description = "Aircraft's retrieved successfully"
             ),
             @ApiResponse(
                     responseCode = "500",
@@ -85,7 +85,7 @@ public class AircraftController {
             )
     })
     public ResponseEntity<AircraftResponseDto> getAircraftById(@Parameter(
-            description = "Unique aircrat ID",
+            description = "Unique aircraft ID",
             example = "1",
             required = true
     ) @PathVariable Long id){
@@ -122,7 +122,7 @@ public class AircraftController {
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Delete the aircraft",
-            description = "Delete the aricraft using the unique ID"
+            description = "Delete the aircraft using the unique ID"
     )
     @ApiResponses({
             @ApiResponse(

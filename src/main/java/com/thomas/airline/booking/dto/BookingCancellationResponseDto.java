@@ -2,12 +2,32 @@ package com.thomas.airline.booking.dto;
 
 import com.thomas.airline.common.enums.BookingStatus;
 import com.thomas.airline.common.enums.PaymentStatus;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class BookingCancellationResponseDto {
+    @Schema(
+            description = "Unique booking id",
+            example = "1"
+    )
     private Long bookingId;
+    @Schema(
+            description = "Passenger name record",
+            example = "PNR1C84A5"
+    )
     private String pnr;
+    @Schema(
+            description = "Booking status",
+            example = "PENDING"
+    )
     private BookingStatus bookingStatus;
+    @Schema(
+            description = "Payment status of the booking",
+            example = "CONFIRMED"
+    )
     private PaymentStatus paymentStatus;
+    @Schema(
+            description = "Message after the booking"
+    )
     private String message="Booking cancelled successfully";
 
     public BookingCancellationResponseDto() {
